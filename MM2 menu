@@ -1,18 +1,21 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Orion/refs/heads/main/Source.lua"))()
-local Window = Library.CreateLib("MM2", "DarkTheme")
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Orion/refs/heads/main/Source"))()
+local Window = Library.CreateLib("MM2 Menu", "DarkTheme")
 
 -- Main Menu
 local MainTab = Window:NewTab("Main")
-local MainSection = MainTab:NewSection("Functions")
+local MainSection = MainTab:NewSection("Main Functions")
 
--- Button to run Aimbot and ESP script
-MainSection:NewButton("🎆 rtrix aimbot fan version 🎆", "Activates Aimbot and ESP", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/NIKITA12340-sudo/dermo/refs/heads/Script/aimbot%20and%20esp"))()
+-- Speed Hack Function
+MainSection:NewSlider("Speed", "Set your speed", 64, 16, function(value)
+    local player = game.Players.LocalPlayer
+    if player.Character and player.Character:FindFirstChild("Humanoid") then
+        player.Character.Humanoid.WalkSpeed = value
+    end
 end)
 
 -- Scripts Menu
 local ScriptsTab = Window:NewTab("Scripts")
-local ScriptsSection = ScriptsTab:NewSection("Available Scripts")
+local ScriptsSection = ScriptsTab:NewSection("Script Functions")
 
 -- Button to run Aimbot and ESP script
 ScriptsSection:NewButton("🎆 rtrix aimbot fan version 🎆", "Activates Aimbot and ESP", function()
@@ -20,16 +23,25 @@ ScriptsSection:NewButton("🎆 rtrix aimbot fan version 🎆", "Activates Aimbot
 end)
 
 -- Button to run Fly script
-ScriptsSection:NewButton("Fly Script", "Activates Fly script", function()
+ScriptsSection:NewButton("Fly Script", "Activates the fly script", function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()
 end)
 
 -- Misc Menu
 local MiscTab = Window:NewTab("Misc")
-local MiscSection = MiscTab:NewSection("Creator and Functions")
+local MiscSection = MiscTab:NewSection("Misc Functions")
 
+-- Creator Info
 MiscSection:NewLabel("Creator: NIKITA12340")
 
-MiscSection:NewButton("Destroy Hub", "Completely removes the menu", function()
+-- Destroy Hub Function
+MiscSection:NewButton("Destroy Hub", "Removes the menu and disables all functions", function()
     Library:Destroy()
 end)
+
+-- Loadstring for easy script addition
+--[[ 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NIKITA12340-sudo/dermo/refs/heads/Script/MM2%20menu"))()
+]]
+
+-- Add your additional scripts here
