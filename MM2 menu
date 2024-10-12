@@ -1,3 +1,7 @@
+--[[ 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NIKITA12340-sudo/dermo/refs/heads/Script/MM2%20menu"))()
+]]
+
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Orion/refs/heads/main/Source"))()
 local Window = Library.CreateLib("MM2 Menu", "DarkTheme")
 
@@ -39,9 +43,3 @@ MiscSection:NewButton("Destroy Hub", "Removes the menu and disables all function
     Library:Destroy()
 end)
 
--- Loadstring for easy script addition
---[[ 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/NIKITA12340-sudo/dermo/refs/heads/Script/MM2%20menu"))()
-]]
-
--- Add your additional scripts here
