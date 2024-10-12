@@ -1,0 +1,35 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Orion/refs/heads/main/Source.lua"))()
+local Window = Library.CreateLib("MM2", "DarkTheme")
+
+-- Main Menu
+local MainTab = Window:NewTab("Main")
+local MainSection = MainTab:NewSection("Functions")
+
+-- Button to run Aimbot and ESP script
+MainSection:NewButton("🎆 rtrix aimbot fan version 🎆", "Activates Aimbot and ESP", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/NIKITA12340-sudo/dermo/refs/heads/Script/aimbot%20and%20esp"))()
+end)
+
+-- Scripts Menu
+local ScriptsTab = Window:NewTab("Scripts")
+local ScriptsSection = ScriptsTab:NewSection("Available Scripts")
+
+-- Button to run Aimbot and ESP script
+ScriptsSection:NewButton("🎆 rtrix aimbot fan version 🎆", "Activates Aimbot and ESP", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/NIKITA12340-sudo/dermo/refs/heads/Script/aimbot%20and%20esp"))()
+end)
+
+-- Button to run Fly script
+ScriptsSection:NewButton("Fly Script", "Activates Fly script", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()
+end)
+
+-- Misc Menu
+local MiscTab = Window:NewTab("Misc")
+local MiscSection = MiscTab:NewSection("Creator and Functions")
+
+MiscSection:NewLabel("Creator: NIKITA12340")
+
+MiscSection:NewButton("Destroy Hub", "Completely removes the menu", function()
+    Library:Destroy()
+end)
