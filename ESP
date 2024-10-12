@@ -1,144 +1,46 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("MM2", "DarkTheme")
+-- Загрузка библиотеки для ESP
+local ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/NIKITA12340-sudo/dermo/refs/heads/main/ESP"))()
 
-local Tab = Window:NewTab("Dont Fart")
-local Section = Tab:NewSection("Enjoy")
+-- Настройка ESP
+local Players = game:GetService("Players")
+local espEnabled = true -- Переменная для отслеживания состояния ESP
 
--- FOV Button
-Section:NewButton("FOV", "ButtonInfo", function()
-    local FovNumber = 115 --Enter your FOV number here
-    local Camera = workspace.CurrentCamera
-    Camera.FieldOfView = FovNumber
-end)
+local function toggleESP()
+    espEnabled = not espEnabled -- Переключаем состояние ESP
 
--- Speed Toggle
-Section:NewToggle("speed (for murderer)", "ToggleInfo", function(state)
-    if state then
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 18.1
-    else
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-    end
-end)
-
--- ESP Button
-Section:NewButton("esp", "ButtonInfo", function()
-    local FillColor = Color3.fromRGB(175, 25, 255)
-    local DepthMode = "AlwaysOnTop"
-    local FillTransparency = 0.5
-    local OutlineColor = Color3.fromRGB(255, 255, 255)
-    local OutlineTransparency = 0
-
-    local CoreGui = game:GetService("CoreGui")
-    local Players = game:GetService("Players")
-    local lp = Players.LocalPlayer
-    local connections = {}
-
-    local Storage = Instance.new("Folder")
-    Storage.Parent = CoreGui
-    Storage.Name = "Highlight_Storage"
-
-    local function Highlight(plr)
-        local Highlight = Instance.new("Highlight")
-        Highlight.Name = plr.Name
-        Highlight.FillColor = FillColor
-        Highlight.DepthMode = DepthMode
-        Highlight.FillTransparency = FillTransparency
-        Highlight.OutlineColor = OutlineColor
-        Highlight.OutlineTransparency = 0
-        Highlight.Parent = Storage
-        
-        local plrchar = plr.Character
-        if plrchar then
-            Highlight.Adornee = plrchar
-        end
-
-        connections[plr] = plr.CharacterAdded:Connect(function(char)
-            Highlight.Adornee = char
-        end)
-    end
-
-    Players.PlayerAdded:Connect(Highlight)
-    for i, v in next, Players:GetPlayers() do
-        Highlight(v)
-    end
-
-    Players.PlayerRemoving:Connect(function(plr)
-        local plrname = plr.Name
-        if Storage[plrname] then
-            Storage[plrname]:Destroy()
-        end
-        if connections[plr] then
-            connections[plr]:Disconnect()
-        end
-    end)
-end)
-
--- Nametag ESP Button
-Section:NewButton("nametag esp", "ButtonInfo", function()
-    local Esp = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/x114/RobloxScripts/main/OpenSourceEsp"))()
-    -- Boxes --
-    Esp.Box = false
-    Esp.BoxColor = Color3.fromRGB(255, 255, 255)
-    Esp.BoxOutline = true
-    Esp.BoxOutlineColor = Color3.fromRGB(0, 0, 0)
-    -- HealthBars --
-    Esp.HealthBar = false
-    Esp.HealthBarSide = "Left" -- Left, Bottom, Right
-    -- Names --
-    Esp.Names = true
-    Esp.NamesColor = Color3.fromRGB(255, 255, 255)
-    Esp.NamesOutline = true
-    Esp.NamesFont = 1
-    Esp.NamesSize = 12.5
-end)
-
--- Noclip and Fly Functionality
-local noclipEnabled = false
-local flyEnabled = false
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-
-local function noclip()
-    while noclipEnabled do
-        wait()
-        for _, v in pairs(character:GetDescendants()) do
-            if v:IsA("BasePart") then
-                v.CanCollide = false
-            end
+    for _, player in pairs(Players:GetPlayers()) do
+        if espEnabled then
+            ESP:CreateESP(player) -- Создаем ESP, если он включен
+        else
+            ESP:DestroyESP(player) -- Удаляем ESP, если он выключен
         end
     end
 end
 
-local function fly()
-    local bodyVelocity = Instance.new("BodyVelocity")
-    bodyVelocity.Velocity = Vector3.new(0, 0, 0)
-    bodyVelocity.MaxForce = Vector3.new(4000, 4000, 4000)
-
-    while flyEnabled do
-        wait()
-        bodyVelocity.Velocity = Vector3.new(0, 50, 0) -- Adjust the vertical speed
-        bodyVelocity.Parent = character.HumanoidRootPart
+for _, player in pairs(Players:GetPlayers()) do
+    if player ~= Players.LocalPlayer then
+        ESP:CreateESP(player) -- Применяем ESP к каждому игроку
     end
-    bodyVelocity:Destroy()
 end
 
--- Noclip Toggle
-Section:NewToggle("noclip", "ToggleInfo", function(state)
-    noclipEnabled = state
-    if state then
-        noclip()
+-- Обновление ESP при добавлении новых игроков
+Players.PlayerAdded:Connect(function(player)
+    if espEnabled then
+        ESP:CreateESP(player)
     end
 end)
 
--- Fly Toggle
-Section:NewToggle("fly", "ToggleInfo", function(state)
-    flyEnabled = state
-    if state then
-        fly()
-    end
+-- Обновление ESP при удалении игроков
+Players.PlayerRemoving:Connect(function(player)
+    ESP:DestroyESP(player)
 end)
 
--- Keybind for UI Toggle
-Section:NewKeybind("KeybindText", "KeybindInfo", Enum.KeyCode.F, function()
-    Library:ToggleUI()
+-- Обработка нажатия клавиши E
+local UserInputService = game:GetService("UserInputService")
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if not gameProcessedEvent then
+        if input.KeyCode == Enum.KeyCode.E then
+            toggleESP() -- Включаем или отключаем ESP при нажатии E
+        end
+    end
 end)
