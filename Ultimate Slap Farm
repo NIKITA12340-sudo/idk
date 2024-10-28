@@ -5,3 +5,4 @@ SCRIPT:
 
 
 
+SeverHOPSet = { Time = 18, -- Max is 18 (seconds) Amount = 1000, -- Lower ping = faster Max is 10000, Maybe 1000 it's best value ErrorReply = "kick", --You can change to "rejoin" to rejoin if the script can't find any server) SwitchServerType = "serverhop", -- Replace it with "rejoin" if u want to rejoin to the current server FarmUntil = math.huge -- Ur slaps amount wanted } loadstring(game:HttpGet("https://raw.githubusercontent.com/Donjosx/AWS/refs/heads/main/Op%20slap%20farm%20%5BObfucasted%5D"))()
