@@ -1,0 +1,8 @@
+-- Check if the player is in the correct game
+if game.GameId == 3808081382 then
+    -- Load and execute the script for TSB Movesets Hub
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/NIKITA12340-sudo/idk/refs/heads/Script/TSBMovesetsHub"))()
+else
+    -- Print a message if the player is not in the right game
+    print("This script is only for The Strongest Battlegrounds (ID: 3808081382).")
+end
