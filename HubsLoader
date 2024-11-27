@@ -1,8 +1,49 @@
--- Check if the player is in the correct game
 if game.GameId == 3808081382 then
-    -- Load and execute the script for TSB Movesets Hub
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/NIKITA12340-sudo/idk/refs/heads/Script/TSBMovesetsHub"))()
+  -- Если игрок в правильной игре, загружаем скрипт
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/ATrainz/main/main/TSB.lua"))()
 else
-    -- Print a message if the player is not in the right game
-    print("This script is only for The Strongest Battlegrounds (ID: 3808081382).")
+  -- Создаем уведомление
+  game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "(ERROR)",
+    Text = "This game is not supported, please ensure you're in the correct game.",
+    Duration = 10
+  })
+
+  -- Создаем GUI для кнопок
+  local screenGui = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
+
+  -- Первая кнопка (JOIN GAME)
+  local button1 = Instance.new("TextButton", screenGui)
+  button1.Size = UDim2.new(0, 200, 0, 50)
+  button1.Position = UDim2.new(0.5, -100, 0.5, 0)
+  button1.Text = "JOIN GAME"
+  button1.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+  button1.TextColor3 = Color3.fromRGB(255, 255, 255)
+  button1.TextSize = 20
+  button1.AnchorPoint = Vector2.new(0.5, 0.5)
+
+  -- Вторая кнопка (CANCEL)
+  local button2 = Instance.new("TextButton", screenGui)
+  button2.Size = UDim2.new(0, 200, 0, 50)
+  button2.Position = UDim2.new(0.5, -100, 0.6, 0)  -- Немного ниже первой кнопки
+  button2.Text = "CANCEL"
+  button2.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+  button2.TextColor3 = Color3.fromRGB(255, 255, 255)
+  button2.TextSize = 20
+  button2.AnchorPoint = Vector2.new(0.5, 0.5)
+
+  -- Действие при нажатии на кнопку "JOIN GAME"
+  button1.MouseButton1Click:Connect(function()
+    -- Перенаправление в нужную игру по GameId
+    game:GetService("TeleportService"):Teleport(3808081382, game.Players.LocalPlayer)
+    
+    -- Уничтожаем обе кнопки
+    screenGui:Destroy()
+  end)
+
+  -- Действие при нажатии на кнопку "CANCEL"
+  button2.MouseButton1Click:Connect(function()
+    -- Уничтожаем обе кнопки
+    screenGui:Destroy()
+  end)
 end
