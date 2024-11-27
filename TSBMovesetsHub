@@ -1,0 +1,197 @@
+-- Load Rayfield library
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+
+-- Create the window
+local Window = Rayfield:CreateWindow({
+    Name = "TSB Movesets Hub", 
+    LoadingTitle = "Rayfield Loading", 
+    LoadingSubtitle = "Player: " .. game.Players.LocalPlayer.Name,  -- Auto-detect the player's name
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "TSB moves",
+        FileName = "MovesConfig"
+    },
+    KeySystem = false,  -- Enable if you want to use a key system
+})
+
+-- Show notification at startup
+Rayfield:Notify("⚠️ THIS SCRIPT IS NOT MINE ⚠️", "I did not create this script, please do not be mad at me for using it to create this hub.", 4483362458)
+
+-- Wait for 10 seconds before continuing
+wait(10)
+
+-- Create a Tab for Debuggers
+local DebuggersTab = Window:CreateTab("🛠️ Debuggers", 4483362458)
+
+-- Create sections for each debugger
+local DebuggerSection = DebuggersTab:CreateSection("⚙️ Debugger Scripts")
+
+-- Add buttons for each debugger script
+DebuggerSection:CreateButton({
+    Name = "🌐 SkyHub",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/refs/heads/main/SkyHub.txt"))()
+    end,
+})
+
+DebuggerSection:CreateButton({
+    Name = "⚡ Infinity Yield",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end,
+})
+
+DebuggerSection:CreateButton({
+    Name = "🔧 Dex",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()
+    end,
+})
+
+-- Create a Tab for TSB Moveset Scripts
+local TSBTab = Window:CreateTab("🕹️ TSB Moveset Scripts", 4483362458)
+
+-- Create sections for TSB Moveset Scripts
+local TSBSection = TSBTab:CreateSection("💥 TSB Characters Scripts")
+
+-- Add buttons for each TSB Moveset script
+TSBSection:CreateButton({
+    Name = "🌀 Gojo",
+    Callback = function()
+        _G.settings = {
+            ["RedStartupId"] = "rbxassetid://1177475221",
+            ["RedHitId"] = "rbxassetid://8625377966",
+        }
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/skibiditoiletfan2007/BaldyToSorcerer/main/Latest.lua"))()
+    end,
+})
+
+TSBSection:CreateButton({
+    Name = "🚄 A-Train",
+    Callback = function()
+        loadstring(game:HttpGet("https://paste.ee/r/AnZ5j"))()
+    end,
+})
+
+TSBSection:CreateButton({
+    Name = "🌀 Geto + Jotaro",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/DuckTheSecond/Duck-sHUB/refs/heads/main/HUBv1"))()
+    end,
+})
+
+TSBSection:CreateButton({
+    Name = "💀 Toji",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Wi-sp/Limitless-legacy/refs/heads/main/GUI"))()
+    end,
+})
+
+TSBSection:CreateButton({
+    Name = "💜 Mahito",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Kenjihin69/Kenjihin69/refs/heads/main/Mahitotsbupdate'))()
+    end,
+})
+
+TSBSection:CreateButton({
+    Name = "🦴 Sans",
+    Callback = function()
+        loadstring(game:HttpGet("https://paste.ee/r/rF9d3"))()
+    end,
+})
+
+TSBSection:CreateButton({
+    Name = "🖤 Glitchtale Chara",
+    Callback = function()
+        loadstring(game:HttpGet("https://paste.ee/r/0yYkO"))()
+    end,
+})
+
+-- Create a Tab for Misc (Additional settings like speedhack, jump power, etc.)
+local MiscTab = Window:CreateTab("⚙️ Misc", 4483362458)
+
+-- Create sections for Misc functions
+local MiscSection = MiscTab:CreateSection("🛠️ Additional Features")
+
+-- Add a Speedhack button
+MiscSection:CreateSlider({
+    Name = "⏩ Speedhack",
+    Range = {16, 9999},  -- Min and Max speed
+    Increment = 1,
+    CurrentValue = 16,
+    Flag = "SpeedHack",  -- Flag for saving configuration
+    Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+    end,
+})
+
+-- Add a Jump Power button
+MiscSection:CreateSlider({
+    Name = "💥 Jump Power",
+    Range = {50, 500},  -- Min and Max jump power
+    Increment = 10,
+    CurrentValue = 50,
+    Flag = "JumpPower",  -- Flag for saving configuration
+    Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+    end,
+})
+
+-- Add a Gravity button
+MiscSection:CreateSlider({
+    Name = "🌍 Gravity",
+    Range = {0, 9999},  -- Min and Max gravity
+    Increment = 50,
+    CurrentValue = 196.2,  -- Default gravity
+    Flag = "Gravity",  -- Flag for saving configuration
+    Callback = function(Value)
+        game.Workspace.Gravity = Value
+    end,
+})
+
+-- Add a Walk Height button
+MiscSection:CreateSlider({
+    Name = "🚶‍♂️ Walk Height",
+    Range = {1, 50},  -- Min and Max walk height
+    Increment = 1,
+    CurrentValue = 2,  -- Default walk height
+    Flag = "WalkHeight",  -- Flag for saving configuration
+    Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.HipHeight = Value
+    end,
+})
+
+-- Add Studhop (air walking) feature
+MiscSection:CreateToggle({
+    Name = "🌬️ Studhop (Air Walk)",
+    CurrentValue = false,
+    Flag = "Studhop",
+    Callback = function(Value)
+        local player = game.Players.LocalPlayer
+        local humanoid = player.Character and player.Character:WaitForChild("Humanoid")
+        
+        if Value then
+            -- Enable Studhop: Allows player to walk in the air
+            game:GetService("UserInputService").InputBegan:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == Enum.KeyCode.Space then
+                    humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+                    humanoid.PlatformStand = true
+                end
+            end)
+        else
+            -- Disable Studhop: Reverts player to default walking behavior
+            humanoid.PlatformStand = false
+        end
+    end
+})
+
+-- Add info section to display background message
+local InfoTab = Window:CreateTab("ℹ️ Info", 4483362458)
+
+local InfoSection = InfoTab:CreateSection("📝 Information")
+
+InfoSection:CreateParagraph({
+    Title = "⚠️ Important Notice ⚠️",
+    Content = "THIS SCRIPT IS NOT MINE. Please do not be mad at me for using it to create this hub. I am just sharing it with you. 😅",
+})
